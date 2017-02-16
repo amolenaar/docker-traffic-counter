@@ -1,4 +1,4 @@
-defmodule PacketAnalyser do
+defmodule TrafficCounter.PacketAnalyser do
   use GenServer
   @moduledoc false
 

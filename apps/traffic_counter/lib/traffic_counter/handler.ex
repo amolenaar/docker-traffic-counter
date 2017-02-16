@@ -1,4 +1,4 @@
-defmodule Handler do
+defmodule TrafficCounter.Handler do
   @moduledoc """
   Behaviour for receiving events from the processing engine.
   """

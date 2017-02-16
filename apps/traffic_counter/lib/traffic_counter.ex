@@ -1,18 +1,21 @@
 defmodule TrafficCounter do
-  @moduledoc """
-  Documentation for TrafficCounter.
-  """
+  use Application
 
-  @doc """
-  Hello world.
+  @moduledoc false
 
-  ## Examples
+  alias TrafficCounter.PacketAnalyser
+  alias TrafficCounter.EchoHandler
 
-      iex> TrafficCounter.hello
-      :world
+  def start(_type, _args) do
+    import Supervisor.Spec, warn: false
 
-  """
-  def hello do
-    :world
+    interface = Application.get_env(:traffic_counter, :interface, 'lo0')
+    children = [
+      worker(PacketAnalyser, [EchoHandler]),
+      worker(:epcap, [PacketAnalyser, [snaplen: 256, interface: interface, promiscuous: true, filter: 'tcp']])
+    ]
+
+    opts = [strategy: :one_for_all, name: TrafficCounter.Sup]
+    Supervisor.start_link(children, opts)
   end
 end
