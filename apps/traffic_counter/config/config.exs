@@ -28,3 +28,11 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+config :exometer_core,
+  report: [reporters: [{:exometer_report_tty, []}]]
+
+config :elixometer,
+  reporter: :exometer_report_tty,
+  env: Mix.env,
+  metric_prefix: "traffic_counter"

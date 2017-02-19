@@ -1,2 +1,12 @@
-%{"epcap": {:git, "https://github.com/msantos/epcap.git", "f796f3d80ce15f1b97cba57cb08cb183cbf1fe5f", [ref: "f796f3d8"]},
-  "pkt": {:git, "https://github.com/msantos/pkt.git", "96d256fbefd7856be8af2e519e16943a63536d49", [branch: "master"]}}
+%{"bear": {:hex, :bear, "0.8.3", "866002127a97932720a0d475d8582c98ec5fb78db3a18dfe7eaf91594d9024b8", [:rebar3], []},
+  "edown": {:hex, :edown, "0.7.0", "6803599606b10f8e328d6d60c44cd16244cd2429908894c415fce4211c3bfefd", [:make, :rebar], []},
+  "elixometer": {:git, "https://github.com/pinterest/elixometer.git", "8ef021a8b4cd78da6f3477c417b8068b28d5cafc", []},
+  "epcap": {:git, "https://github.com/msantos/epcap.git", "f796f3d80ce15f1b97cba57cb08cb183cbf1fe5f", [ref: "f796f3d8"]},
+  "exometer_core": {:hex, :exometer_core, "1.4.0", "a546ccd38be910de6ea75ea95b724b6b2db513c26f02e30919b25eb19651815a", [:rebar3], [{:edown, "0.7.0", [hex: :edown, optional: false]}, {:folsom, "0.8.3", [hex: :folsom, optional: false]}, {:lager, "3.0.2", [hex: :lager, optional: false]}, {:parse_trans, "2.9.0", [hex: :parse_trans, optional: false]}, {:setup, "1.7.0", [hex: :setup, optional: false]}]},
+  "folsom": {:hex, :folsom, "0.8.3", "71cff146152fa95e6092e62119f9dc96888660111e7b61853c8fdcf80598a4e0", [:rebar3], [{:bear, "0.8.3", [hex: :bear, optional: false]}]},
+  "goldrush": {:hex, :goldrush, "0.1.9", "f06e5d5f1277da5c413e84d5a2924174182fb108dabb39d5ec548b27424cd106", [:rebar3], []},
+  "lager": {:hex, :lager, "3.2.4", "a6deb74dae7927f46bd13255268308ef03eb206ec784a94eaf7c1c0f3b811615", [:rebar3], [{:goldrush, "0.1.9", [hex: :goldrush, optional: false]}]},
+  "parse_trans": {:hex, :parse_trans, "2.9.0", "3f5f7b402928fb9fd200c891e635de909045d1efac40ce3f924d3892898f85eb", [:rebar], [{:edown, "> 0.0.0", [hex: :edown, optional: false]}]},
+  "pkt": {:git, "https://github.com/msantos/pkt.git", "96d256fbefd7856be8af2e519e16943a63536d49", [branch: "master"]},
+  "pobox": {:hex, :pobox, "1.0.2", "45a5bc91e3cf20f9bc0b94494f00fcdccbc333ab2e0856972b7f0f196fc41613", [:rebar3], []},
+  "setup": {:hex, :setup, "1.7.0", "15df8e57c6df9755e22bfb1aef0c640bd97e9889396fdfb2a85a5536a9043674", [:rebar3], []}}

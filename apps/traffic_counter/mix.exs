@@ -21,7 +21,7 @@ defmodule TrafficCounter.Mixfile do
     # Specify extra applications you'll use from Erlang/Elixir
     [extra_applications: [:logger],
      mod: {TrafficCounter, []},
-     env: [interface: 'lo0']]
+     env: [interface: 'en0']]
   end
 
   # Dependencies can be Hex packages:
@@ -38,6 +38,7 @@ defmodule TrafficCounter.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:epcap, git: "https://github.com/msantos/epcap.git", ref: "f796f3d8"}]
+    [{:epcap, git: "https://github.com/msantos/epcap.git", ref: "f796f3d8"},
+     {:elixometer, github: "pinterest/elixometer"}]
   end
 end
