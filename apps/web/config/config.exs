@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :traffic_counter, key: :value
+#     config :web, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:traffic_counter, :key)
+#     Application.get_env(:web, :key)
 #
 # Or configure a 3rd-party app:
 #
@@ -28,3 +28,15 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+config :web,
+  port: 8080
+
+config :prometheus, Web.MetricsExporter,
+  path: "/metrics",
+  format: :auto, ## or :protobuf, or :text
+  registry: :default,
+  auth: false
+
+config :traffic_counter,
+  handler: Web.PrometheusHandler

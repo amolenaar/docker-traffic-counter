@@ -1,8 +1,8 @@
-defmodule TrafficCounter.Mixfile do
+defmodule Web.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :traffic_counter,
+    [app: :web,
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
@@ -19,9 +19,8 @@ defmodule TrafficCounter.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [mod: {TrafficCounter, []},
-     extra_applications: [:logger],
-     env: [interface: 'en0']]
+    [mod: {Web, []},
+     extra_applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:
@@ -38,7 +37,10 @@ defmodule TrafficCounter.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:epcap, git: "https://github.com/msantos/epcap.git", ref: "f796f3d8"},
-     {:folsom, "~> 0.8.3"}]
+    [{:cowboy, "~> 1.0"},
+     {:plug, "~> 1.3.0"},
+     {:prometheus_ex, "~> 1.1.0"},
+     {:prometheus_plugs, "~> 1.1.1"},
+     {:traffic_counter, in_umbrella: true}]
   end
 end
