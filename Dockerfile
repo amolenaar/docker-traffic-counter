@@ -6,9 +6,6 @@ ENV MIX_ENV=prod
 
 WORKDIR /work/
 
-ADD apps ./apps
-ADD config ./config
-ADD mix.* ./
 
 EXPOSE 9100
 
@@ -27,8 +24,13 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         docker-engine \
         libpcap0.8-dev \
-    && rm -rf /var/lib/apt/lists \
-    && mix local.hex --force && mix local.rebar --force \
+    && rm -rf /var/lib/apt/lists
+
+ADD apps ./apps
+ADD config ./config
+ADD mix.* ./
+
+RUN mix local.hex --force && mix local.rebar --force \
     && mix deps.get && mix compile
 
 CMD ["mix", "run", "--no-halt"]

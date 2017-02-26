@@ -8,16 +8,17 @@ defmodule Web.PrometheusHandler do
   require Logger
   require TrafficCounter.Interop.Hostent
 
-  alias TrafficCounter.Interop.Hostent
-
   def handle_stat(source_ip, target_host) do
 #    {:ok, hostent} = :inet.gethostbyaddr(source_ip)
 #    name = Hostent.hostent(hostent, :h_name)
-    name = source_ip |> Tuple.to_list |> Enum.join(".")
+
+    mapping = ContainerNameResolver.map_name_to_ip_address()
+
+    name = Map.get_lazy(mapping, source_ip, fn() -> source_ip |> Tuple.to_list |> Enum.join(".") end)
 
     Logger.debug("Recording activity between #{name} and #{target_host}")
 
-    Counter.inc([name: :blaze_service_request_count,
+    Counter.inc([name: :service_request_count,
                  labels: [name, target_host]])
 
   end

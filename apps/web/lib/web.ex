@@ -17,7 +17,7 @@ defmodule Web do
 
     Web.MetricsExporter.setup()
 
-    Counter.declare([name: :blaze_service_request_count,
+    Counter.declare([name: :service_request_count,
                      help: "Service request count.",
                      labels: [:src, :dest]])
 
