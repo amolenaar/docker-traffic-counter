@@ -15,6 +15,12 @@ defmodule TrafficCounter.ContainerNameResolver do
     GenServer.start_link(__MODULE__, [], [name: name])
   end
 
+  @doc """
+  Perform a lookup call. If the requested address is not in the lookup table, it's
+  IP address formatted as a string and returned instead.
+
+  `name` is optional and defaults to the module name.
+  """
   def lookup(name \\ __MODULE__, ip_address) do
     GenServer.call(name, {:lookup, ip_address})
   end
@@ -31,10 +37,17 @@ defmodule TrafficCounter.ContainerNameResolver do
     {:ok, map_ip_addresses_to_names()}
   end
 
+  @doc """
+  Server side of `lookup/2`.
+  """
   def handle_call({:lookup, ip_address}, _from, mapping) do
     {:reply, Map.get_lazy(mapping, ip_address, fn() -> ip_address |> Tuple.to_list |> Enum.join(".") end), mapping}
   end
 
+  @doc """
+  Handle a request for a `:refresh_mapping`. A async task is spun up to do the actual
+  refresh. The result is send back to this server in a `:new_mapping` message.
+   """
   def handle_info(:refresh_mapping, state) do
     Logger.debug "Refreshing docker container mapping"
     my_pid = self()
@@ -44,12 +57,18 @@ defmodule TrafficCounter.ContainerNameResolver do
     {:noreply, state}
   end
 
+  @doc """
+  Apply a new mapping, coming for the task started on a `:refresh_mapping` request.
+  """
   def handle_info({:new_mapping, new_mapping}, _state) do
     Logger.debug "Received new container mapping #{inspect new_mapping}"
     schedule_refresh()
     {:noreply, new_mapping}
   end
 
+  @doc """
+  Handle any unknown info message by logging it.
+  """
   def handle_info(unknown_msg, state) do
     Logger.warn("Unexpected info message: #{inspect unknown_msg}")
     {:noreply, state}
