@@ -20,8 +20,7 @@ defmodule TrafficCounter.Mixfile do
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
     [mod: {TrafficCounter, []},
-     extra_applications: [:logger],
-     env: [interface: 'en0']]
+     extra_applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:

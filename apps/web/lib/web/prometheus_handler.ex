@@ -11,8 +11,9 @@ defmodule Web.PrometheusHandler do
   alias TrafficCounter.Interop.Hostent
 
   def handle_stat(source_ip, target_host) do
-    {:ok, hostent} = :inet.gethostbyaddr(source_ip)
-    name = Hostent.hostent(hostent, :h_name)
+#    {:ok, hostent} = :inet.gethostbyaddr(source_ip)
+#    name = Hostent.hostent(hostent, :h_name)
+    name = source_ip |> Tuple.to_list |> Enum.join(".")
 
     Logger.debug("Recording activity between #{name} and #{target_host}")
 

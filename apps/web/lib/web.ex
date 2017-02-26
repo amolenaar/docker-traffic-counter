@@ -3,6 +3,7 @@ defmodule Web do
 
   @moduledoc false
 
+  require Logger
   require Prometheus.Metric.Counter
 
   alias Web.Router
@@ -12,7 +13,7 @@ defmodule Web do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    port = Application.get_env(:web, :port)
+    port = Application.get_env(:web, :port, 5000)
 
     Web.MetricsExporter.setup()
 
@@ -20,6 +21,7 @@ defmodule Web do
                      help: "Service request count.",
                      labels: [:src, :dest]])
 
+    Logger.info "Startic Prometheus metrics endpoint on port http://localhost:#{port}/metrics"
     children = [
       Cowboy.child_spec(:http, Router, [], port: port, acceptors: 10)
     ]
