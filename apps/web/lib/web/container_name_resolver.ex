@@ -7,6 +7,11 @@ defmodule ContainerNameResolver do
 
   """
 
+  def lookup(source_ip) do
+    mapping = map_name_to_ip_address()
+    Map.get_lazy(mapping, source_ip, fn() -> source_ip |> Tuple.to_list |> Enum.join(".") end)
+  end
+
   def map_name_to_ip_address() do
     query_running_containers()
     |> Enum.map(&get_ip_address_and_image_name/1)

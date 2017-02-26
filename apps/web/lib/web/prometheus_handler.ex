@@ -12,9 +12,7 @@ defmodule Web.PrometheusHandler do
 #    {:ok, hostent} = :inet.gethostbyaddr(source_ip)
 #    name = Hostent.hostent(hostent, :h_name)
 
-    mapping = ContainerNameResolver.map_name_to_ip_address()
-
-    name = Map.get_lazy(mapping, source_ip, fn() -> source_ip |> Tuple.to_list |> Enum.join(".") end)
+    name = ContainerNameResolver.lookup(source_ip)
 
     Logger.debug("Recording activity between #{name} and #{target_host}")
 
