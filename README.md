@@ -1,6 +1,7 @@
 # Docker Traffic Counter
 
-docker run -ti -v /var/run/docker.sock:/var/run/docker.sock --net=host -p 9100:9100 
+
+    docker run -ti -v /var/run/docker.sock:/var/run/docker.sock --net=host -p 9100:9100 
 
 **TODO: Add description**
 

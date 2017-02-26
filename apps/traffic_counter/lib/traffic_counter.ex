@@ -4,17 +4,18 @@ defmodule TrafficCounter do
   @moduledoc false
 
   alias TrafficCounter.PacketAnalyser
-  alias TrafficCounter.FolsomHandler
+  alias TrafficCounter.ContainerNameResolver
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
     exec = Application.get_env(:traffic_counter, :exec, '')
     interface = Application.get_env(:traffic_counter, :interface)
-    handler = Application.get_env(:traffic_counter, :handler, TrafficCounter.FolsomHandler)
+    handler = Application.get_env(:traffic_counter, :handler, TrafficCounter.EchoHandler)
 
     children = [
       worker(PacketAnalyser, [handler]),
+      worker(ContainerNameResolver, []),
       worker(:epcap, [PacketAnalyser, [exec: exec, snaplen: 256, interface: interface, promiscuous: true, filter: 'tcp']])
     ]
 

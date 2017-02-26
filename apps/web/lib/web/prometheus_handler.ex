@@ -4,13 +4,11 @@ defmodule Web.PrometheusHandler do
 
   @moduledoc false
 
-  # TODO: Move this module to TrafficCounter app
   require Logger
-  require TrafficCounter.Interop.Hostent
+
+  alias TrafficCounter.ContainerNameResolver
 
   def handle_stat(source_ip, target_host) do
-#    {:ok, hostent} = :inet.gethostbyaddr(source_ip)
-#    name = Hostent.hostent(hostent, :h_name)
 
     name = ContainerNameResolver.lookup(source_ip)
 

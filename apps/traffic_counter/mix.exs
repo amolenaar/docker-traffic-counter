@@ -37,7 +37,6 @@ defmodule TrafficCounter.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:epcap, git: "https://github.com/msantos/epcap.git", ref: "f796f3d8"},
-     {:folsom, "~> 0.8.3"}]
+    [{:epcap, git: "https://github.com/msantos/epcap.git", ref: "f796f3d8"}]
   end
 end
