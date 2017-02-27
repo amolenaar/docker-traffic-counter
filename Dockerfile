@@ -1,10 +1,10 @@
 # TODO: base image on alpine; use Elixir release process to install docker container; use erlinit to get things started
 
-FROM elixir:1.4.1
+FROM msaraiva/elixir-gcc:1.3.4
 
 ENV MIX_ENV=prod
 
-WORKDIR /work/
+WORKDIR /app/
 
 
 EXPOSE 9100
@@ -13,18 +13,9 @@ EXPOSE 9100
 # * docker
 # * libpcap
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        apt-transport-https \
-        software-properties-common \
-    && curl -fsSL https://apt.dockerproject.org/gpg | apt-key add - \
-    && add-apt-repository \
-        "deb https://apt.dockerproject.org/repo/ debian-$(lsb_release -cs) main" \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-        docker-engine \
-        libpcap0.8-dev \
-    && rm -rf /var/lib/apt/lists
+RUN apk update \
+    && apk add docker libpcap-dev \
+    && rm -rf /var/cache/apk/*
 
 ADD apps ./apps
 ADD config ./config
