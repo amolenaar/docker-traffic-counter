@@ -8,6 +8,12 @@ defmodule Web.PrometheusHandler do
 
   alias TrafficCounter.ContainerNameResolver
 
+  def setup() do
+        Counter.declare([name: :service_request_count,
+                         help: "Service request count.",
+                         labels: [:src, :dest]])
+  end
+
   def handle_stat(source_ip, target_host) do
 
     name = ContainerNameResolver.lookup(source_ip)
