@@ -12,4 +12,4 @@ config :prometheus, Web.MetricsExporter,
   auth: false
 
 config :traffic_counter,
-  handler: Web.PrometheusHandler
+  handler: TrafficCounter.PrometheusHandler

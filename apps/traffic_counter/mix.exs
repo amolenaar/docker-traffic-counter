@@ -37,6 +37,7 @@ defmodule TrafficCounter.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:epcap, git: "https://github.com/msantos/epcap.git", ref: "f796f3d8"}]
+    [{:epcap, git: "https://github.com/msantos/epcap.git", ref: "f796f3d8"},
+     {:prometheus_ex, "~> 1.1.0"}]
   end
 end

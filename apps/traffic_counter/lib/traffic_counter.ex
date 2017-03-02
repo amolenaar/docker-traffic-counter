@@ -13,6 +13,8 @@ defmodule TrafficCounter do
     interface = Application.get_env(:traffic_counter, :interface)
     handler = Application.get_env(:traffic_counter, :handler, TrafficCounter.EchoHandler)
 
+    handler.setup()
+
     children = [
       worker(PacketAnalyser, [handler]),
       worker(ContainerNameResolver, []),

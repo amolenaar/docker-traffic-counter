@@ -15,8 +15,6 @@ defmodule Web do
 
     Web.MetricsExporter.setup()
 
-    Web.PrometheusHandler.setup()
-
     Logger.info "Startic Prometheus metrics endpoint on port http://localhost:#{port}/metrics"
     children = [
       Cowboy.child_spec(:http, Router, [], port: port, acceptors: 10)

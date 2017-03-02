@@ -1,4 +1,4 @@
-defmodule Web.PrometheusHandler do
+defmodule TrafficCounter.PrometheusHandler do
   @behaviour TrafficCounter.Handler
   use Prometheus.Metric
 
