@@ -32,6 +32,24 @@ To get anything useful, run this container on the host network:
 
     docker run -ti -v /var/run/docker.sock:/var/run/docker.sock --net=host -p 9100:9100 amolenaar/traffic-counter
 
+## Building
+
+This is an [Elixir](http://elixir-lang.org) project. To build it, you'll need
+to have Elixir 1.4.2 or newer installed.
+
+To build the application for release in a container:
+
+    mix docker.build
+    
+To make the actual runtime container:
+
+    mix docker.release
+
+Note to self: do not forget to publish: 
+
+    mix docker.publish
+
+
 Suggestions, improvements are welcome!
 
 Have fun,
