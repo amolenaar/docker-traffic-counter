@@ -1,6 +1,10 @@
 defmodule TrafficCounter.Interop.IPv4 do
   require Record
 
+  @moduledoc """
+  Wrap `:pkt.ipv4`.
+  """
+
   Record.defrecord :ipv4, Record.extract(:ipv4,  from: "../../deps/pkt/include/pkt.hrl")
 
   defmacro ipv4?(data) do
@@ -12,6 +16,10 @@ end
 defmodule TrafficCounter.Interop.IPv6 do
   require Record
 
+  @moduledoc """
+  Wrap `:pkt.ipv6`.
+  """
+
   Record.defrecord :ipv6, Record.extract(:ipv6,  from: "../../deps/pkt/include/pkt.hrl")
 
   defmacro ipv6?(data) do
@@ -22,6 +30,10 @@ end
 
 defmodule TrafficCounter.Interop.Hostent do
   require Record
+
+  @moduledoc """
+  Wrap `:inet.hostent`.
+  """
 
   Record.defrecord :hostent, Record.extract(:hostent,  from_lib: "kernel/include/inet.hrl")
 end

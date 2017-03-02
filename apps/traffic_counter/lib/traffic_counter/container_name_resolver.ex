@@ -54,6 +54,7 @@ defmodule TrafficCounter.ContainerNameResolver do
     Task.start_link(fn() ->
       send my_pid, {:new_mapping, map_ip_addresses_to_names()}
     end)
+    schedule_refresh()
     {:noreply, state}
   end
 
@@ -62,7 +63,6 @@ defmodule TrafficCounter.ContainerNameResolver do
   """
   def handle_info({:new_mapping, new_mapping}, _state) do
     Logger.debug "Received new container mapping #{inspect new_mapping}"
-    schedule_refresh()
     {:noreply, new_mapping}
   end
 
@@ -88,13 +88,13 @@ defmodule TrafficCounter.ContainerNameResolver do
   end
 
   defp query_running_containers() do
-    cmd!("docker", ["ps", "-q"])
-    |> String.split("\n", trim: true)
+    out = cmd!("docker", ["ps", "-q"])
+    out |> String.split("\n", trim: true)
   end
 
   defp get_ip_address_and_image_name(container_id) do
-    cmd!("docker", ["inspect", "--format", "{{ .NetworkSettings.IPAddress }} {{ .Config.Image }}", container_id])
-    |> String.split(" ", trim: true)
+    out = cmd!("docker", ["inspect", "--format", "{{ .NetworkSettings.IPAddress }} {{ .Config.Image }}", container_id])
+    out |> String.split(" ", trim: true)
   end
 
   ##
@@ -109,7 +109,7 @@ defmodule TrafficCounter.ContainerNameResolver do
   #
   # The tuple format is the one used internally for IP(v4) addresses.
   defp to_ip_address(str) do
-    String.split(str, ".") |> Enum.map(&String.to_integer/1)|> List.to_tuple()
+    str |> String.split(".") |> Enum.map(&String.to_integer/1) |> List.to_tuple()
   end
 
 end

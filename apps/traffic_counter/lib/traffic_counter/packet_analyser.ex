@@ -19,7 +19,7 @@ defmodule TrafficCounter.PacketAnalyser do
     {:ok, {module}}
   end
 
-  def handle_info({:packet, data_link_type, _time, _length, data}, state={module}) do
+  def handle_info({:packet, data_link_type, _time, _length, data}, state = {module}) do
     [_network_layer, internet_layer, _transport_layer, application_layer] = :pkt.decapsulate({data_link_type, data})
     # TODO: Match 'host:' case insenitive
     with {host_offset, host_length} <- :binary.match(application_layer, "Host: "),
