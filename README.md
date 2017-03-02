@@ -30,7 +30,7 @@ and how often they do that.
 
 To get anything useful, run this container on the host network:
 
-    docker run -ti -v /var/run/docker.sock:/var/run/docker.sock --net=host -p 9100:9100 traffic-counter
+    docker run -ti -v /var/run/docker.sock:/var/run/docker.sock --net=host -p 9100:9100 amolenaar/traffic-counter
 
 Suggestions, improvements are welcome!
 
