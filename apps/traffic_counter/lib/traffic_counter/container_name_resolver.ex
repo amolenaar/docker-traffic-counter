@@ -88,20 +88,24 @@ defmodule TrafficCounter.ContainerNameResolver do
   end
 
   defp query_running_containers() do
-    out = cmd!("docker", ["ps", "-q"])
-    out |> String.split("\n", trim: true)
+    out = docker(["ps", "-q"])
+    out |> String.trim() |> String.split("\n", trim: true)
   end
 
   defp get_ip_address_and_image_name(container_id) do
-    out = cmd!("docker", ["inspect", "--format", "{{ .NetworkSettings.IPAddress }} {{ .Config.Image }}", container_id])
-    out |> String.split(" ", trim: true)
+    out = docker(["inspect", "--format", "{{ .NetworkSettings.IPAddress }} {{ .Config.Image }}", container_id])
+    out |> String.trim() |> String.split(" ", trim: true)
   end
 
   ##
   # Execute a command and assume it always returns with an exit code 0.
-  defp cmd!(command, args) do
-    {data, 0} = System.cmd(command, args)
-    data |> String.trim()
+  defp docker(args) do
+    case System.cmd("docker", args) do
+      {data, 0} -> data
+      {data, err} ->
+        Logger.error "Can not invoke docker command. Exit code #{err}: #{data}"
+        throw {:error, :docker_call_failed}
+    end
   end
 
   ##
