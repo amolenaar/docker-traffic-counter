@@ -11,7 +11,7 @@ defmodule Web do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    port = Application.get_env(:web, :port, 5000)
+    port = get_port()
 
     Web.MetricsExporter.setup()
 
@@ -22,5 +22,12 @@ defmodule Web do
 
     opts = [strategy: :one_for_one, name: Web]
     Supervisor.start_link(children, opts)
+  end
+
+  def get_port() do
+    System.get_env("PORT")
+    |> (fn(nil) -> Application.get_env(:web, :port, 5000)
+          (i)   -> String.to_integer(i)
+        end).()
   end
 end
