@@ -19,6 +19,9 @@ erl_crash.dump
 # Also ignore archive artifacts (built via "mix archive.build").
 *.ez
 
+# Release file
+docker_traffic_counter.tar.gz
+
 *.ipr
 *.iml
 *.iws
