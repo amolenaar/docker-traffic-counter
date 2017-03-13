@@ -21,15 +21,26 @@ defmodule TrafficCounter.PacketAnalyser do
 
   def handle_info({:packet, data_link_type, _time, _length, data}, state = {module}) do
     [_network_layer, internet_layer, _transport_layer, application_layer] = :pkt.decapsulate({data_link_type, data})
-    # TODO: Match 'host:' case insenitive
+
+    case extract_host_header(application_layer) do
+      {:host, host} -> module.handle_stat(ip_saddr(internet_layer), host)
+      :nohost -> nil
+    end
+
+    {:noreply, state}
+  end
+
+  def extract_host_header(application_layer) do
+
     with {host_offset, host_length} <- :binary.match(application_layer, "Host: "),
          address_offset             <- host_offset + host_length,
          {crlf_offset, _length}     <- :binary.match(application_layer, <<13, 10>>,
                                                      scope: {address_offset, byte_size(application_layer) - address_offset}),
          host                       <- :binary.part(application_layer, address_offset, crlf_offset - address_offset) do
-          module.handle_stat(ip_saddr(internet_layer), host)
+      {:host, host}
+    else
+      _ -> :nohost
     end
-    {:noreply, state}
   end
 
   def ip_saddr(data) when IPv4.ipv4?(data), do: IPv4.ipv4(data, :saddr)

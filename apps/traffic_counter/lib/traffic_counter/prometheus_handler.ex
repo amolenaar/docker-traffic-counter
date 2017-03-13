@@ -11,17 +11,26 @@ defmodule TrafficCounter.PrometheusHandler do
   def setup() do
         Counter.declare([name: :service_request_count,
                          help: "Service request count.",
-                         labels: [:src, :dest]])
+                         labels: [:src, :container, :container_name, :dest]])
   end
 
   def handle_stat(source_ip, target_host) do
 
-    name = ContainerNameResolver.lookup(source_ip)
+    container = ContainerNameResolver.lookup(source_ip)
+    container_name = extract_container_name(container)
 
-    Logger.debug("Recording activity between #{name} and #{target_host}")
+    Logger.debug("Recording activity between #{container} (#{source_ip}) and #{target_host}")
 
     Counter.inc([name: :service_request_count,
-                 labels: [name, target_host]])
+                 labels: [source_ip, container, container_name, target_host]])
 
+  end
+
+  def extract_container_name(container) do
+    container
+    |> String.split("/")
+    |> Enum.at(-1)
+    |> String.split(":")
+    |> Enum.at(0)
   end
 end
