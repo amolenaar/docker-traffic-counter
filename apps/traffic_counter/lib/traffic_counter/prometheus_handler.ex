@@ -22,9 +22,11 @@ defmodule TrafficCounter.PrometheusHandler do
     Logger.debug("Recording activity between #{container} (#{source_ip}) and #{target_host}")
 
     Counter.inc([name: :service_request_count,
-                 labels: [source_ip, container, container_name, target_host]])
+                 labels: [format_ip(source_ip), container, container_name, target_host]])
 
   end
+
+  def format_ip({a, b, c, d}), do: "#{a}.#{b}.#{c}.#{d}"
 
   def extract_container_name(container) do
     container
