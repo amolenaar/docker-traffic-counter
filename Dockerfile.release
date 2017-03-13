@@ -10,7 +10,5 @@ ENV PORT=9100 MIX_ENV=prod REPLACE_OS_VARS=true SHELL=/bin/sh
 ADD docker_traffic_counter.tar.gz ./
 RUN chown -R default ./releases
 
-USER default
-
 ENTRYPOINT ["/opt/app/bin/docker_traffic_counter"]
 CMD ["foreground"]
