@@ -1,0 +1,26 @@
+version: '2'
+services:
+  web:
+    image: "nginx:alpine"
+    ports:
+     - 8080:80
+    network_mode: "bridge"
+  client:
+    build: "./client"
+    environment:
+      URL: http://web:80
+    network_mode: "bridge"
+    links:
+      - web
+    depends_on:
+      - web
+  traffic-counter:
+    image: amolenaar/traffic-counter:0.1.0.31-0f427958dc
+    environment:
+      PORT: 9100
+    ports:
+      - 9100:9100
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    network_mode: "host"
+
