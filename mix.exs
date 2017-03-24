@@ -12,7 +12,7 @@ defmodule DockerTrafficCounter.Mixfile do
 
   defp deps do
     [{:ex_doc, "~> 0.14", only: :dev},
-     {:credo, "~> 0.5.3", only: :dev, runtime: false},
+     {:credo, "~> 0.7.1", only: :dev, runtime: false},
      {:dialyxir, "~> 0.4", only: :dev, runtime: false},
      {:mix_docker, "~> 0.3.2"}]
   end
