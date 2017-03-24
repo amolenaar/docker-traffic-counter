@@ -41,7 +41,7 @@ defmodule TrafficCounter.ContainerNameResolver do
   Server side of `lookup/2`.
   """
   def handle_call({:lookup, ip_address}, _from, mapping) do
-    {:reply, Map.get_lazy(mapping, ip_address, fn() -> ip_address |> Tuple.to_list |> Enum.join(".") end), mapping}
+    {:reply, Map.get(mapping, ip_address, ""), mapping}
   end
 
   @doc """
@@ -88,13 +88,15 @@ defmodule TrafficCounter.ContainerNameResolver do
   end
 
   defp query_running_containers() do
-    out = docker(["ps", "-q"])
-    out |> String.trim() |> String.split("\n", trim: true)
+    docker(["ps", "-q"])
+    |> String.trim()
+    |> String.split("\n", trim: true)
   end
 
   defp get_ip_address_and_image_name(container_id) do
-    out = docker(["inspect", "--format", "{{ .NetworkSettings.IPAddress }} {{ .Config.Image }}", container_id])
-    out |> String.trim() |> String.split(" ", trim: true)
+    docker(["inspect", "--format", "{{ .NetworkSettings.IPAddress }} {{ .Config.Image }}", container_id])
+    |> String.trim()
+    |> String.split(" ", trim: true)
   end
 
   ##

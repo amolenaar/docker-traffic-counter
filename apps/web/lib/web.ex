@@ -25,7 +25,8 @@ defmodule Web do
   end
 
   def get_port() do
-    System.get_env("PORT")
+    "PORT"
+    |> System.get_env()
     |> (fn(nil) -> Application.get_env(:web, :port, 5000)
           (i)   -> String.to_integer(i)
         end).()

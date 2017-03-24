@@ -1,5 +1,6 @@
 defmodule TrafficCounter.EchoHandler do
   @behaviour TrafficCounter.Handler
+  @moduledoc false
 
   def setup() do
     :ok

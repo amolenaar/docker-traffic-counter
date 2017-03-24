@@ -15,7 +15,6 @@ defmodule TrafficCounter.PrometheusHandler do
   end
 
   def handle_stat(source_ip, target_host) do
-
     container = ContainerNameResolver.lookup(source_ip)
     container_name = extract_container_name(container)
 
@@ -23,7 +22,6 @@ defmodule TrafficCounter.PrometheusHandler do
 
     Counter.inc([name: :service_request_count,
                  labels: [format_ip(source_ip), container, container_name, target_host]])
-
   end
 
   def format_ip({a, b, c, d}), do: "#{a}.#{b}.#{c}.#{d}"
