@@ -10,7 +10,7 @@ defmodule TrafficCounter do
     import Supervisor.Spec, warn: false
 
     exec = Application.get_env(:traffic_counter, :exec, '')
-    interface = Application.get_env(:traffic_counter, :interface)
+    interface = get_interface()
     handler = Application.get_env(:traffic_counter, :handler, TrafficCounter.EchoHandler)
 
     handler.setup()
@@ -23,5 +23,13 @@ defmodule TrafficCounter do
 
     opts = [strategy: :one_for_all, name: TrafficCounter.Sup]
     Supervisor.start_link(children, opts)
+  end
+
+  def get_interface() do
+    "IF"
+    |> System.get_env()
+    |> (fn(nil)   -> Application.get_env(:traffic_counter, :interface)
+          (iface) -> iface
+        end).()
   end
 end
