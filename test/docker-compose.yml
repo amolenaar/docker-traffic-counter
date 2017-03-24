@@ -4,12 +4,12 @@ services:
     image: "nginx:alpine"
     ports:
      - 8080:80
-    network_mode: "bridge"
+    network_mode: bridge
   client:
     build: "./client"
     environment:
       URL: http://web:80
-    network_mode: "bridge"
+    network_mode: bridge
     links:
       - web
     depends_on:
@@ -21,6 +21,19 @@ services:
     ports:
       - 9100:9100
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    network_mode: "host"
-
+      - /var/run/docker.sock:/var/run/docker.sock
+    network_mode: host
+  prometheus:
+    image: prom/prometheus:v1.5.2
+    ports:
+      - 9090:9090
+    network_mode: bridge
+#    links:
+#      - traffic-counter
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    
+networks:
+  default:
+    external:
+      name: bridge
