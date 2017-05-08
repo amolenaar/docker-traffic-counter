@@ -50,6 +50,16 @@ Note to self: do not forget to publish:
     mix docker.publish
 
 
+## Testing
+
+In the `test` folder you can find a docker-compose file. Lauch this file and
+you should find that after a couple of seconds, the traffic-counter is scraped
+(if not check the IP address of the traffic counter and 
+
+Note that there is a small caveat there, since the traffic counter runs in host
+mode. Therefore, if the IP address of the traffic counter container is any
+different, it should be updated in the prometheus configutation.
+
 Suggestions, improvements are welcome!
 
 Have fun,
