@@ -34,21 +34,10 @@ To get anything useful, run this container on the host network:
 
 ## Building
 
-This is an [Elixir](http://elixir-lang.org) project. To build it, you'll need
-to have Elixir 1.4.2 or newer installed.
+This is an [Elixir](http://elixir-lang.org) project in a Docker container. To
+build it, simply call
 
-To build the application for release in a container:
-
-    mix docker.build
-    
-To make the actual runtime container:
-
-    mix docker.release
-
-Note to self: do not forget to publish: 
-
-    mix docker.publish
-
+    docker build .
 
 ## Testing
 
