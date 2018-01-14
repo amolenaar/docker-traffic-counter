@@ -19,6 +19,9 @@ erl_crash.dump
 # Also ignore archive artifacts (built via "mix archive.build").
 *.ez
 
+# VSCode
+.elixir_ls
+
 # Release file
 docker_traffic_counter.tar.gz
 
