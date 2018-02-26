@@ -28,8 +28,8 @@ services:
     ports:
       - 9090:9090
     network_mode: bridge
-#    links:
-#      - traffic-counter
+    links:
+      - traffic-counter
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
 

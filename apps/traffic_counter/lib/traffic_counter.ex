@@ -28,8 +28,9 @@ defmodule TrafficCounter do
   def get_interface() do
     "IF"
     |> System.get_env()
-    |> (fn(nil)   -> Application.get_env(:traffic_counter, :interface)
-          (iface) -> iface
-        end).()
+    |> case do
+        nil -> Application.get_env(:traffic_counter, :interface)
+        iface -> iface
+      end
   end
 end
